@@ -145,6 +145,17 @@
   animation-play-state: paused;
 }
 
+.grayscale-muted {
+  filter: grayscale(100%) saturate(0%) contrast(1.05);
+  opacity: 0.6;
+}
+
+.grayscale-muted:hover {
+  filter: none;
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
 @keyframes marquee-scroll {
   from { transform: translateX(0); }
   to { transform: translateX(-100%); }
