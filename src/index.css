@@ -121,3 +121,43 @@
     to { opacity: 1; transform: translateY(0); }
   }
 }
+
+/* Marquee */
+.marquee-container {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+}
+
+.marquee-track {
+  display: flex;
+  flex-shrink: 0;
+  animation: marquee-scroll 40s linear infinite;
+}
+
+@media (max-width: 768px) {
+  .marquee-track {
+    animation-duration: 50s;
+  }
+}
+
+.marquee-container:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-container {
+    overflow-x: auto;
+  }
+  .marquee-track {
+    animation: none;
+  }
+  .marquee-track:last-child {
+    display: none;
+  }
+}
