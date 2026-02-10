@@ -38,7 +38,7 @@ export default function StudioConsultationBanner() {
             >
               Request a studio consultation
             </button>
-        </div>
+            </div>
             <span className="text-xs text-muted-foreground">Response within 24 hours</span>
           </div>
         </div>
