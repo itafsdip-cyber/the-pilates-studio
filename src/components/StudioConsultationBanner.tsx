@@ -24,6 +24,7 @@ export default function StudioConsultationBanner() {
 
           {/* Right */}
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 lg:gap-6">
+            <div className="flex flex-col-reverse gap-4 items-center>
             <a
               href={STUDIO_PHONE_HREF}
               className="flex items-center gap-2 text-sm text-foreground hover:opacity-70 transition-opacity duration-300"
@@ -37,6 +38,7 @@ export default function StudioConsultationBanner() {
             >
               Request a studio consultation
             </button>
+        </div>
             <span className="text-xs text-muted-foreground">Response within 24 hours</span>
           </div>
         </div>
