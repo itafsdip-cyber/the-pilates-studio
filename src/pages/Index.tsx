@@ -9,6 +9,8 @@ import productTower from "@/assets/product-tower-1.jpg";
 import productMat from "@/assets/product-mat-1.jpg";
 import productBarrel from "@/assets/product-barrel-1.jpg";
 import { Shield, Truck, Award } from "lucide-react";
+import BrandMarquee from "@/components/BrandMarquee";
+import StudioConsultationBanner from "@/components/StudioConsultationBanner";
 
 const guidedEntries = [
   { title: "Home Pilates", desc: "Equipment designed for your living space", image: homePilates, to: "/product-finder?context=home" },
@@ -66,6 +68,9 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      {/* Brand Marquee */}
+      <BrandMarquee />
 
       {/* Guided Entry */}
       <section className="max-w-content mx-auto px-6 lg:px-10 py-20 lg:py-28">
@@ -164,6 +169,8 @@ export default function Index() {
           </div>
         </div>
       </section>
+      {/* Studio Consultation Banner */}
+      <StudioConsultationBanner />
     </div>
   );
 }
