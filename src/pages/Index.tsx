@@ -10,6 +10,7 @@ import productMat from "@/assets/product-mat-1.jpg";
 import productBarrel from "@/assets/product-barrel-1.jpg";
 import { Shield, Truck, Award } from "lucide-react";
 import BrandMarquee from "@/components/BrandMarquee";
+import ShopByBrand from "@/components/ShopByBrand";
 import StudioConsultationBanner from "@/components/StudioConsultationBanner";
 
 const guidedEntries = [
@@ -125,6 +126,9 @@ export default function Index() {
           </div>
         </div>
       </section>
+
+      {/* Shop by Brand */}
+      <ShopByBrand />
 
       {/* Trust Section */}
       <section className="max-w-content mx-auto px-6 lg:px-10 py-20 lg:py-28">
