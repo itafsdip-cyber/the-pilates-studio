@@ -32,7 +32,7 @@ export default function Header() {
 
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img src={logoSvg} alt="thereformer" className="h-6 md:h-7 lg:h-8 w-auto" />
+            <img src={logoSvg} alt="thereformer" className="h-[80px] w-auto" />
           </Link>
 
           {/* Desktop nav */}
