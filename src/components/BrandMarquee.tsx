@@ -27,7 +27,7 @@ function LogoItem({ logo, ariaHidden = false }: { logo: typeof brandLogos[0]; ar
       <img
         src={logo.src}
         alt={ariaHidden ? "" : logo.name}
-        className="h-11 md:h-14 w-auto object-contain transition-all duration-500 grayscale-muted hover:grayscale-0 hover:opacity-100"
+        className="h-14 md:h-20 w-auto object-contain transition-all duration-500 grayscale-muted hover:grayscale-0 hover:opacity-100"
         loading="lazy"
       />
     </div>
@@ -36,7 +36,7 @@ function LogoItem({ logo, ariaHidden = false }: { logo: typeof brandLogos[0]; ar
 
 export default function BrandMarquee() {
   return (
-    <section className="py-14 lg:py-16 border-b border-border">
+    <section className="py-16 lg:py-20 border-b border-border">
       <div className="max-w-content mx-auto px-6 lg:px-10 mb-10">
         <h2 className="font-serif text-xl text-foreground mb-1">Trusted by studios</h2>
         <p className="text-xs text-muted-foreground tracking-wide">
