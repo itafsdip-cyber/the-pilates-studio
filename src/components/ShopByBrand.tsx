@@ -10,26 +10,37 @@ import peakPilates from "@/assets/logos/peak-pilates.png";
 import pilatesAcademy from "@/assets/logos/pilates-academy.png";
 import reformRx from "@/assets/logos/reform-rx.png";
 
+import bgReformerStudio from "@/assets/brand-bg/bg-reformer-studio.jpg";
+import bgMatAccessories from "@/assets/brand-bg/bg-mat-accessories.jpg";
+import bgTower from "@/assets/brand-bg/bg-tower.jpg";
+import bgBarrel from "@/assets/brand-bg/bg-barrel.jpg";
+import bgSpringsDetail from "@/assets/brand-bg/bg-springs-detail.jpg";
+import bgCadillac from "@/assets/brand-bg/bg-cadillac.jpg";
+import bgChair from "@/assets/brand-bg/bg-chair.jpg";
+import bgStudioRow from "@/assets/brand-bg/bg-studio-row.jpg";
+import bgProps from "@/assets/brand-bg/bg-props.jpg";
+import bgReformerDetail from "@/assets/brand-bg/bg-reformer-detail.jpg";
+
 interface Brand {
   name: string;
   logoSrc: string;
   href: string;
+  bgSrc: string;
 }
 
 const brands: Brand[] = [
-  { name: "Balanced Body", logoSrc: balancedBody, href: "/collection/balanced-body" },
-  { name: "BASI Systems", logoSrc: basiSystems, href: "/collection/basi-systems" },
-  { name: "Merrithew", logoSrc: merrithew, href: "/collection/merrithew" },
-  { name: "Peak Pilates", logoSrc: peakPilates, href: "/collection/peak-pilates" },
-  { name: "Pilates Academy", logoSrc: pilatesAcademy, href: "/collection/pilates-academy" },
-  { name: "ReformRX", logoSrc: reformRx, href: "/collection/reform-rx" },
-  { name: "Stott Pilates", logoSrc: merrithew, href: "/collection/stott-pilates" },
-  { name: "Gratz Industries", logoSrc: balancedBody, href: "/collection/gratz-industries" },
-  { name: "Allegro", logoSrc: peakPilates, href: "/collection/allegro" },
-  { name: "Wunda", logoSrc: reformRx, href: "/collection/wunda" },
+  { name: "Balanced Body", logoSrc: balancedBody, href: "/collection/balanced-body", bgSrc: bgReformerStudio },
+  { name: "BASI Systems", logoSrc: basiSystems, href: "/collection/basi-systems", bgSrc: bgMatAccessories },
+  { name: "Merrithew", logoSrc: merrithew, href: "/collection/merrithew", bgSrc: bgTower },
+  { name: "Peak Pilates", logoSrc: peakPilates, href: "/collection/peak-pilates", bgSrc: bgBarrel },
+  { name: "Pilates Academy", logoSrc: pilatesAcademy, href: "/collection/pilates-academy", bgSrc: bgSpringsDetail },
+  { name: "ReformRX", logoSrc: reformRx, href: "/collection/reform-rx", bgSrc: bgCadillac },
+  { name: "Stott Pilates", logoSrc: merrithew, href: "/collection/stott-pilates", bgSrc: bgChair },
+  { name: "Gratz Industries", logoSrc: balancedBody, href: "/collection/gratz-industries", bgSrc: bgStudioRow },
+  { name: "Allegro", logoSrc: peakPilates, href: "/collection/allegro", bgSrc: bgProps },
+  { name: "Wunda", logoSrc: reformRx, href: "/collection/wunda", bgSrc: bgReformerDetail },
 ];
 
-// Position configs for 5 visible slots: -2, -1, 0, 1, 2
 const desktopPositions = [
   { tx: -520, tz: -260, scale: 0.55, ry: -28, opacity: 0.1 },
   { tx: -300, tz: -120, scale: 0.82, ry: -14, opacity: 0.7 },
@@ -72,7 +83,6 @@ export default function ShopByBrand() {
   const next = useCallback(() => setActiveIndex((i) => (i + 1) % total), [total]);
   const prev = useCallback(() => setActiveIndex((i) => (i - 1 + total) % total), [total]);
 
-  // Auto-advance
   useEffect(() => {
     if (reducedMotion || isPaused) return;
     autoplayRef.current = setInterval(next, 5000);
@@ -81,7 +91,6 @@ export default function ShopByBrand() {
     };
   }, [next, reducedMotion, isPaused]);
 
-  // Keyboard
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -93,7 +102,6 @@ export default function ShopByBrand() {
     return () => el.removeEventListener("keydown", handler);
   }, [next, prev]);
 
-  // Touch/swipe
   const onTouchStart = (e: React.TouchEvent) => { touchStart.current = e.touches[0].clientX; };
   const onTouchEnd = (e: React.TouchEvent) => {
     if (touchStart.current === null) return;
@@ -104,7 +112,6 @@ export default function ShopByBrand() {
 
   const positions = isMobile ? mobilePositions : desktopPositions;
 
-  // Reduced motion fallback
   if (reducedMotion) {
     return (
       <section className="py-20 lg:py-28 bg-secondary/30">
@@ -126,13 +133,15 @@ export default function ShopByBrand() {
     );
   }
 
-  // Get offset for each brand relative to activeIndex (wrapping)
   function getOffset(index: number): number {
     let diff = index - activeIndex;
     if (diff > total / 2) diff -= total;
     if (diff < -total / 2) diff += total;
     return diff;
   }
+
+  const cardW = isMobile ? 200 : 280;
+  const cardH = isMobile ? 240 : 320;
 
   return (
     <section className="py-20 lg:py-28 bg-secondary/30 relative overflow-hidden">
@@ -165,10 +174,9 @@ export default function ShopByBrand() {
         >
           {brands.map((brand, index) => {
             const offset = getOffset(index);
-            // Only render items within visible range
             if (Math.abs(offset) > 2) return null;
 
-            const posIndex = offset + 2; // map -2..2 to 0..4
+            const posIndex = offset + 2;
             const pos = positions[posIndex];
             const isCenter = offset === 0;
 
@@ -176,51 +184,97 @@ export default function ShopByBrand() {
               <Link
                 key={brand.name}
                 to={brand.href}
-                className="absolute top-1/2 left-1/2 flex flex-col items-center justify-center gap-4 rounded-3xl backdrop-blur-sm cursor-pointer group"
+                className="absolute top-1/2 left-1/2 rounded-3xl cursor-pointer group overflow-hidden"
                 style={{
-                  width: isMobile ? 200 : 280,
-                  height: isMobile ? 240 : 320,
-                  marginLeft: isMobile ? -100 : -140,
-                  marginTop: isMobile ? -120 : -160,
+                  width: cardW,
+                  height: cardH,
+                  marginLeft: -cardW / 2,
+                  marginTop: -cardH / 2,
                   transform: `translateX(${pos.tx}px) translateZ(${pos.tz}px) scale(${pos.scale}) rotateY(${pos.ry}deg)`,
                   opacity: pos.opacity,
                   transition: "transform 800ms ease, opacity 800ms ease",
                   zIndex: 5 - Math.abs(offset),
                   transformStyle: "preserve-3d",
-                  background: "hsl(var(--background) / 0.06)",
                   boxShadow: isCenter
-                    ? "0 20px 60px -20px hsl(var(--foreground) / 0.08)"
+                    ? "0 20px 60px -20px hsl(var(--foreground) / 0.1)"
                     : "0 8px 30px -12px hsl(var(--foreground) / 0.04)",
                 }}
               >
-                <img
-                  src={brand.logoSrc}
-                  alt={brand.name}
-                  className="w-auto object-contain transition-all duration-500"
+                {/* Background image layer */}
+                <div className="absolute inset-0">
+                  <img
+                    src={brand.bgSrc}
+                    alt=""
+                    className="w-full h-full object-cover"
+                    style={{
+                      transform: "scale(1.03)",
+                      filter: "grayscale(30%) saturate(0.85) contrast(0.95)",
+                      opacity: 0.28,
+                    }}
+                    loading="lazy"
+                  />
+                </div>
+
+                {/* Gradient overlay */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
                   style={{
-                    height: isMobile ? (isCenter ? 60 : 48) : (isCenter ? 88 : 68),
-                    filter: isCenter
-                      ? "grayscale(60%) saturate(40%) contrast(1.05)"
-                      : "grayscale(100%) saturate(0%) contrast(1.05)",
-                    opacity: isCenter ? 0.85 : 0.65,
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.filter = "none";
-                    e.currentTarget.style.opacity = "1";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.filter = isCenter
-                      ? "grayscale(60%) saturate(40%) contrast(1.05)"
-                      : "grayscale(100%) saturate(0%) contrast(1.05)";
-                    e.currentTarget.style.opacity = isCenter ? "0.85" : "0.65";
+                    background: "linear-gradient(to bottom, hsl(var(--background) / 0.85) 0%, hsl(var(--background) / 0.35) 50%, hsl(var(--background) / 0.85) 100%)",
                   }}
                 />
-                <span
-                  className="text-xs tracking-wide text-muted-foreground transition-opacity duration-300"
-                  style={{ opacity: isCenter ? 1 : 0.5 }}
-                >
-                  {brand.name}
-                </span>
+
+                {/* Vignette */}
+                <div
+                  className="absolute inset-0 pointer-events-none"
+                  style={{
+                    background: "radial-gradient(ellipse at center, transparent 50%, hsl(var(--foreground) / 0.04) 100%)",
+                  }}
+                />
+
+                {/* Logo spotlight + logo */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 z-10">
+                  {/* Radial spotlight behind logo */}
+                  <div
+                    className="absolute pointer-events-none"
+                    style={{
+                      width: isMobile ? 140 : 200,
+                      height: isMobile ? 140 : 200,
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -55%)",
+                      background: "radial-gradient(ellipse at center, hsl(var(--background) / 0.95) 0%, transparent 70%)",
+                    }}
+                  />
+
+                  <img
+                    src={brand.logoSrc}
+                    alt={brand.name}
+                    className="w-auto object-contain relative z-10 transition-all duration-500"
+                    style={{
+                      height: isMobile ? (isCenter ? 60 : 48) : (isCenter ? 88 : 68),
+                      filter: isCenter
+                        ? "grayscale(60%) saturate(40%) contrast(1.05)"
+                        : "grayscale(100%) saturate(0%) contrast(1.05)",
+                      opacity: isCenter ? 0.85 : 0.65,
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.filter = "none";
+                      e.currentTarget.style.opacity = "1";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.filter = isCenter
+                        ? "grayscale(60%) saturate(40%) contrast(1.05)"
+                        : "grayscale(100%) saturate(0%) contrast(1.05)";
+                      e.currentTarget.style.opacity = isCenter ? "0.85" : "0.65";
+                    }}
+                  />
+                  <span
+                    className="text-xs tracking-wide text-muted-foreground transition-opacity duration-300 relative z-10"
+                    style={{ opacity: isCenter ? 1 : 0.5 }}
+                  >
+                    {brand.name}
+                  </span>
+                </div>
               </Link>
             );
           })}
