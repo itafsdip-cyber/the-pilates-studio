@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { ShoppingBag, Menu, X } from "lucide-react";
 import logoSvg from "@/assets/logo.svg";
+import logoMobileSvg from "@/assets/logo-mobile.svg";
 
 const navLinks = [
   { label: "Reformers", to: "/collection/reformers" },
@@ -32,7 +33,8 @@ export default function Header() {
 
           {/* Logo */}
           <Link to="/" className="flex items-center">
-            <img src={logoSvg} alt="thereformer" className="h-[80px] w-auto" />
+            <img src={logoMobileSvg} alt="thereformer" className="h-7 w-auto object-contain lg:hidden" />
+            <img src={logoSvg} alt="thereformer" className="h-[80px] w-auto hidden lg:block" />
           </Link>
 
           {/* Desktop nav */}
