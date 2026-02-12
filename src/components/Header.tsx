@@ -2,6 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 import { ShoppingBag, Menu, X } from "lucide-react";
+import logoSvg from "@/assets/logo.svg";
 
 const navLinks = [
   { label: "Reformers", to: "/collection/reformers" },
@@ -30,8 +31,8 @@ export default function Header() {
           </button>
 
           {/* Logo */}
-          <Link to="/" className="font-serif text-xl lg:text-2xl tracking-tight text-foreground">
-            thereformer
+          <Link to="/" className="flex items-center">
+            <img src={logoSvg} alt="thereformer" className="h-6 md:h-7 lg:h-8 w-auto" />
           </Link>
 
           {/* Desktop nav */}
@@ -53,12 +54,6 @@ export default function Header() {
 
           {/* Right actions */}
           <div className="flex items-center gap-6">
-            <Link
-              to="/about"
-              className="hidden lg:block text-xs tracking-widest uppercase text-muted-foreground hover:text-foreground transition-opacity duration-300"
-            >
-              About
-            </Link>
             <button
               onClick={openCart}
               className="relative p-1 text-foreground"
@@ -89,13 +84,6 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              to="/about"
-              onClick={() => setMobileOpen(false)}
-              className="text-sm tracking-widest uppercase text-foreground"
-            >
-              About
-            </Link>
             <Link
               to="/support"
               onClick={() => setMobileOpen(false)}
