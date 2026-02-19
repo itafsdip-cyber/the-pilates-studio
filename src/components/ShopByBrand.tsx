@@ -209,7 +209,7 @@ export default function ShopByBrand() {
                     style={{
                       transform: "scale(1.03)",
                       filter: "grayscale(30%) saturate(0.85) contrast(0.95)",
-                      opacity: 65.28,
+                      opacity: 0.28,
                     }}
                     loading="lazy"
                   />
