@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
-import { useCart } from "@/context/CartContext";
+import { useCartStore } from "@/stores/cartStore";
 import { ShoppingBag, Menu, X } from "lucide-react";
 import logoSvg from "@/assets/logo.svg";
 import logoMobileSvg from "@/assets/logo-mobile.svg";
@@ -14,7 +14,8 @@ const navLinks = [
 ];
 
 export default function Header() {
-  const { openCart, itemCount } = useCart();
+  const openCart = useCartStore((s) => s.openCart);
+  const itemCount = useCartStore((s) => s.itemCount());
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
 
