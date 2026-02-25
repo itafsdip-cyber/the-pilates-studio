@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { storefrontApiRequest, PRODUCTS_QUERY, type ShopifyProduct } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { Loader2 } from "lucide-react";
+import { getDemoProductsByCategory, getAllDemoProducts } from "@/data/demoProducts";
 
 // Map URL slugs → Shopify product_type or tags to filter
 const categoryLabels: Record<string, string> = {
@@ -36,9 +37,18 @@ export default function Collection() {
     storefrontApiRequest(PRODUCTS_QUERY, { first: 50 })
       .then((data) => {
         const all: ShopifyProduct[] = data?.data?.products?.edges ?? [];
-        setProducts(all);
+        if (all.length > 0) {
+          setProducts(all);
+        } else {
+          // Fallback to demo products
+          const demo = category ? getDemoProductsByCategory(category) : getAllDemoProducts();
+          setProducts(demo);
+        }
       })
-      .catch(console.error)
+      .catch(() => {
+        const demo = category ? getDemoProductsByCategory(category) : getAllDemoProducts();
+        setProducts(demo);
+      })
       .finally(() => setLoading(false));
   }, [category]);
 

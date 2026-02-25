@@ -4,6 +4,7 @@ import { storefrontApiRequest, PRODUCT_BY_HANDLE_QUERY } from "@/lib/shopify";
 import { useCartStore } from "@/stores/cartStore";
 import { ChevronDown, ChevronUp, Loader2 } from "lucide-react";
 import type { ShopifyProduct } from "@/lib/shopify";
+import { getDemoProductByHandle } from "@/data/demoProducts";
 
 function CollapsibleSection({ title, children }: { title: string; children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -40,9 +41,22 @@ export default function ProductDetail() {
         if (p) {
           setProductData(p);
           setSelectedVariantId(p.variants.edges[0]?.node?.id ?? null);
+        } else {
+          // Fallback to demo
+          const demo = getDemoProductByHandle(handle);
+          if (demo) {
+            setProductData(demo);
+            setSelectedVariantId(demo.variants.edges[0]?.node?.id ?? null);
+          }
         }
       })
-      .catch(console.error)
+      .catch(() => {
+        const demo = getDemoProductByHandle(handle);
+        if (demo) {
+          setProductData(demo);
+          setSelectedVariantId(demo.variants.edges[0]?.node?.id ?? null);
+        }
+      })
       .finally(() => setLoading(false));
   }, [handle]);
 
